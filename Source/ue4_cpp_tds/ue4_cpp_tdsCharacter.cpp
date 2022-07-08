@@ -10,6 +10,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Materials/Material.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Engine/World.h"
 
 Aue4_cpp_tdsCharacter::Aue4_cpp_tdsCharacter()
@@ -86,5 +88,38 @@ void Aue4_cpp_tdsCharacter::Tick(float DeltaSeconds)
 			CursorToWorld->SetWorldLocation(TraceHitResult.Location);
 			CursorToWorld->SetWorldRotation(CursorR);
 		}
+	}
+	MovementTick(DeltaSeconds);
+}
+
+void Aue4_cpp_tdsCharacter::SetupPlayerInputComponent(UInputComponent* NewInputComponent)
+{
+	Super::SetupPlayerInputComponent(NewInputComponent);
+
+	NewInputComponent->BindAxis(TEXT("MoveForward"), this, &Aue4_cpp_tdsCharacter::InputAxisX);
+	NewInputComponent->BindAxis(TEXT("MoveRight"), this, &Aue4_cpp_tdsCharacter::InputAxisY);
+}
+
+void Aue4_cpp_tdsCharacter::InputAxisX(float Value)
+{
+	AxisX = Value;
+}
+
+void Aue4_cpp_tdsCharacter::InputAxisY(float Value)
+{
+	AxisY = Value;
+}
+
+void Aue4_cpp_tdsCharacter::MovementTick(float DeltaTime)
+{
+	AddMovementInput(FVector(1.0f, 0.0f, 0.0f), AxisX);
+	AddMovementInput(FVector(0.0f, 1.0f, 0.0f), AxisY);
+	APlayerController* myController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (myController)
+	{
+		FHitResult ResultHit;
+		myController->GetHitResultUnderCursorByChannel(ETraceTypeQuery::TraceTypeQuery6, false, ResultHit);
+		FRotator FindRotatorResultYaw = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), ResultHit.Location).Yaw;
+		SetActorRotation(FQuat(FRotator(0.0f, FindRotatorResultYaw, 0.0f)));
 	}
 }
