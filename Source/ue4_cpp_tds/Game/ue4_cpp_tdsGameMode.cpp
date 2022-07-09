@@ -2,7 +2,7 @@
 
 #include "ue4_cpp_tdsGameMode.h"
 #include "ue4_cpp_tdsPlayerController.h"
-#include "ue4_cpp_tdsCharacter.h"
+#include "../Character/ue4_cpp_tdsCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
 Aue4_cpp_tdsGameMode::Aue4_cpp_tdsGameMode()

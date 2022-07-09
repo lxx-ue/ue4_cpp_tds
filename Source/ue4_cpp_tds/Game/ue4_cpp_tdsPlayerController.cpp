@@ -4,7 +4,7 @@
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
-#include "ue4_cpp_tdsCharacter.h"
+#include "../Character/ue4_cpp_tdsCharacter.h"
 #include "Engine/World.h"
 
 Aue4_cpp_tdsPlayerController::Aue4_cpp_tdsPlayerController()
