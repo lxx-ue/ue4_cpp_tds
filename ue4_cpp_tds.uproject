@@ -7,7 +7,10 @@
 		{
 			"Name": "ue4_cpp_tds",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
 		}
 	]
 }
